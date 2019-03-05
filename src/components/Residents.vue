@@ -3,6 +3,12 @@
 		<v-card>
 			<v-list>
 				<v-subheader>Residents</v-subheader>
+				<div class="text-xs-center" v-if="dataLoaded">
+					<v-progress-circular
+						indeterminate
+						color="purple"
+					></v-progress-circular>
+				</div>
 				<v-list-tile v-for="item in items" :key="item.name" avatar>
 					<v-list-tile-action>
 						<v-icon v-if="item.name" color="pink">accessibility_new</v-icon>
@@ -26,7 +32,8 @@ export default {
   data() {
     return {
       items: [],
-      hasResidents: false
+      hasResidents: false,
+      dataLoaded: false
     }
   },
   mounted() {
@@ -39,13 +46,15 @@ export default {
   },
   methods: {
     getResidentDetails() {
+      this.dataLoaded = true;
+      this.items = [];
       const residentLen = this.people.length;
       if (!residentLen) {
         this.hasResidents = false;
         return false;
-	  }
-	  this.hasResidents = true;
-      const promiseArr = this.people.map((item,index)=> new Promise((resolve, reject) => {
+      }
+      this.hasResidents = true;
+      const promiseArr = this.people.map((item, index) => new Promise((resolve, reject) => {
         axios
           .get(this.people[index])
           .then(response => {
@@ -54,6 +63,7 @@ export default {
           .catch(err => reject(err));
       }));
       Promise.all(promiseArr).then(res => {
+        this.dataLoaded = false;
         this.items = res.map(item => ({ name: item.data.name }));
       })
     }

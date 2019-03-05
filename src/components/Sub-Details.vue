@@ -3,7 +3,7 @@
 		<v-flex v-for="attribute in attributes" :key="subDetails[attribute]">
 			<v-card>
 				<v-list>
-					<v-subheader>{{ attribute }}</v-subheader>
+					<v-subheader>{{ attribute | readableFormat }}</v-subheader>
 					<v-list-tile>
 						<v-list-tile-action>
 							<v-icon v-if="subDetails[attribute]" color="black">star</v-icon>
@@ -30,14 +30,20 @@ export default {
   },
   computed: {
     attributes() {
-      return Object.keys(this.subDetails).filter(item =>
+      return this.subDetails ? Object.keys(this.subDetails).filter(item =>
         item === 'name'
         || item === 'climate'
         || item === 'rotation_period'
         || item === 'gravity'
         || item === 'diameter'
         || item === 'surface_water'
-        || item === 'orbital_period');
+        || item === 'orbital_period') : [];
+    }
+  },
+  filters: {
+    readableFormat: function (value) {
+      const str = value.replace('_', ' ');
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
   }
 };

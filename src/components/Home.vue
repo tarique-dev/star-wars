@@ -10,6 +10,7 @@
 						<vue-good-table
 							:columns="columns"
 							:rows="rows"
+							theme="black-rhino"
 							:line-numbers="true"
 							@on-row-click="onRowClick"
 							:sort-options="{

@@ -21,7 +21,7 @@
 					<sub-details :subDetails="detailsData" />
 						</v-flex>
 						<v-flex>
-					<residents :people="detailsData.residents" />
+					<residents :people="detailsData?detailsData.residents:[]" />
 						</v-flex>
 					</v-layout>
 				</div>
