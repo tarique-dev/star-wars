@@ -11,7 +11,7 @@
 				</div>
 				<v-list-tile v-for="item in items" :key="item.name" avatar>
 					<v-list-tile-action>
-						<v-icon v-if="item.name" color="pink">accessibility_new</v-icon>
+						<v-icon v-if="item.name" color="purple">mood</v-icon>
 					</v-list-tile-action>
 
 					<v-list-tile-content>
